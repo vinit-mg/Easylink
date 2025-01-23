@@ -1,4 +1,4 @@
-name: Laravel CI/CD to DigitalOcean
+syname: Laravel CI/CD to DigitalOcean
 
 on:
   push:
@@ -32,12 +32,6 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "
-            cd /var/www/html/your-laravel-app &&
-            git pull origin main &&
-            composer install --no-dev --prefer-dist &&
-            php artisan migrate --force &&
-            php artisan config:cache &&
-            php artisan route:cache &&
-            php artisan queue:restart &&
-            sudo systemctl restart nginx
+            cd /var/www/easylink &&
+            git pull origin main
           "

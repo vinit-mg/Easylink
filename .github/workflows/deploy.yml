@@ -15,14 +15,14 @@ jobs:
 
       - name: Deploy to DigitalOcean
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          REMOTE_HOST: ${{ secrets.DO_HOST }}
-          REMOTE_USER: ${{ secrets.DO_USER }}
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          REMOTE_HOST: ${{secrets.DO_HOST}}
+          REMOTE_USER: ${{secrets.DO_USER}}
         run: |
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "
+          ssh -i '~/.ssh/id_rsa' $REMOTE_USER@$REMOTE_HOST "
             cd /var/www/html/your-laravel-app &&
             git pull origin main &&
             php artisan migrate --force &&

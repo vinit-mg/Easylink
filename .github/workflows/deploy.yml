@@ -22,12 +22,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ket
           chmod 600 ~/.ssh/id_ket
-          ssh -i "~/.ssh/id_ket" root@46.101.122.148 "
-            cd /var/www/html/your-laravel-app &&
-            git pull origin main &&
-            php artisan migrate --force &&
-            php artisan config:cache &&
-            php artisan route:cache &&
-            php artisan queue:restart &&
-            sudo systemctl restart nginx
+          ssh -i "~/.ssh/id_ket" $REMOTE_USER@$REMOTE_HOST "
+            cd /var/www/easylink &&
+            git pull origin main
           "

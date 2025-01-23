@@ -1,9 +1,9 @@
-name: Deploy Laravel to DigitalOcean
+name: Laravel CI/CD to DigitalOcean
 
 on:
   push:
     branches:
-      - main
+      - main  # Change this if you use a different branch
 
 jobs:
   deploy:
@@ -13,20 +13,16 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_rsa
-
       - name: Deploy to DigitalOcean
         env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.DO_HOST }}
           REMOTE_USER: ${{ secrets.DO_USER }}
         run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
           ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "
-            cd /var/www/easylink
+            cd /var/www/easylink &&
+            git pull origin main
           "

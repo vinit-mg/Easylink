@@ -22,7 +22,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          eval "$(ssh-agent -s)"
-          ssh-add ~/.ssh/id_rsa
-          ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "echo SSH Connected Successfully"
+          ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "
+            cd /var/www/html/your-laravel-app &&
+            git pull origin main &&
+            php artisan migrate --force &&
+            php artisan config:cache &&
+            php artisan route:cache &&
+            php artisan queue:restart &&
+            sudo systemctl restart nginx
           "

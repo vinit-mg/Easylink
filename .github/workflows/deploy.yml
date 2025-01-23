@@ -20,8 +20,8 @@ jobs:
           REMOTE_USER: ${{ secrets.DO_USER }}
         run: |
           mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ket
+          chmod 600 ~/.ssh/id_ket
           ssh -o StrictHostKeyChecking=no $REMOTE_USER@$REMOTE_HOST "
             cd /var/www/easylink &&
             git pull origin main

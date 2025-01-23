@@ -1,9 +1,9 @@
-syname: Laravel CI/CD to DigitalOcean
+name: Deploy Laravel to DigitalOcean
 
 on:
   push:
     branches:
-      - main  # Change this if you use a different branch
+      - main  # Change this if you deploy from a different branch
 
 jobs:
   deploy:
@@ -13,16 +13,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set Up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.2
-          extensions: mbstring, bcmath, ctype, json, pdo, openssl
-
-      - name: Install Composer Dependencies
-        run: composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
-
-      - name: Deploy to DigitalOcean
+      - name: Deploy to DigitalOcean via SSH
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           REMOTE_HOST: ${{ secrets.DO_HOST }}

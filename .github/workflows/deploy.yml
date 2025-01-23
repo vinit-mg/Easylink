@@ -22,7 +22,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh -i '$SSH_PRIVATE_KEY' $REMOTE_USER@$REMOTE_HOST "
+          ssh -i "$SSH_PRIVATE_KEY" $REMOTE_USER@$REMOTE_HOST "
             cd /var/www/html/your-laravel-app &&
             git pull origin main &&
             php artisan migrate --force &&

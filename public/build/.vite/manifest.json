@@ -1,0 +1,30 @@
+{
+  "resources/css/admin/app.scss": {
+    "file": "static/app2.css",
+    "src": "resources/css/admin/app.scss",
+    "isEntry": true
+  },
+  "resources/css/app.css": {
+    "file": "static/app.css",
+    "src": "resources/css/app.css",
+    "isEntry": true
+  },
+  "resources/js/admin/app.js": {
+    "file": "static/app.js",
+    "name": "app",
+    "src": "resources/js/admin/app.js",
+    "isEntry": true
+  },
+  "resources/js/app.js": {
+    "file": "static/app4.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true
+  },
+  "resources/js/form-builder/field.js": {
+    "file": "static/field.js",
+    "name": "field",
+    "src": "resources/js/form-builder/field.js",
+    "isEntry": true
+  }
+}

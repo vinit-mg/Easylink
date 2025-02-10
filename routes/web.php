@@ -23,11 +23,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware(['auth', 'verified', SuperAdminRedirect::class])->group(function () {
+Route::middleware(['auth', 'verified', SuperAdminRedirect::class, SetLocale::class])->group(function () {
 
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->middleware(['auth', 'verified', SetLocale::class])->name('dashboard');
+    })->middleware(['auth', 'verified'])->name('dashboard');
 
     Route::get('/orders', [OrdersController::class, 'index'])->middleware(['auth', 'verified'])->name('orders');
     Route::get('/orders/view/{id}', [OrdersController::class, 'view'])->middleware(['auth', 'verified'])->name('orders.view');
@@ -44,28 +44,35 @@ Route::middleware(['auth', 'verified', SuperAdminRedirect::class])->group(functi
 
 Route::post('/switch-language', [ProfileController::class, 'switchLanguage'])->name('language.switch');
 
-Route::group(config('translation.route_group_config') + ['namespace' => 'JoeDixon\\Translation\\Http\\Controllers'], function ($router) {
-    $router->get(config('translation.ui_url'), 'LanguageController@index')
-        ->name('languages.index')->middleware(SetLocale::class);
+Route::group(
+    array_merge(
+        config('translation.route_group_config'),
+        ['namespace' => 'JoeDixon\\Translation\\Http\\Controllers', 'middleware' => ['auth', 'verified']]
+    ),
+    function ($router) {
 
-    $router->get(config('translation.ui_url').'/create', 'LanguageController@create')
-        ->name('languages.create')->middleware(SetLocale::class);
+        $router->get(config('translation.ui_url'), 'LanguageController@index')
+            ->name('languages.index')->middleware(SetLocale::class);
 
-    $router->post(config('translation.ui_url'), 'LanguageController@store')
-        ->name('languages.store');
+        $router->get(config('translation.ui_url') . '/create', 'LanguageController@create')
+            ->name('languages.create')->middleware(SetLocale::class, 'can:language create');
 
-    $router->get(config('translation.ui_url').'/{language}/translations', 'LanguageTranslationController@index')
-        ->name('languages.translations.index');
+        $router->post(config('translation.ui_url'), 'LanguageController@store')
+            ->name('languages.store');
 
-    $router->post(config('translation.ui_url').'/{language}', 'LanguageTranslationController@update')
-        ->name('languages.translations.update');
+        $router->get(config('translation.ui_url') . '/{language}/translations', 'LanguageTranslationController@index')
+            ->name('languages.translations.index');
 
-    $router->get(config('translation.ui_url').'/{language}/translations/create', 'LanguageTranslationController@create')
-        ->name('languages.translations.create')->middleware(SetLocale::class);
+        $router->post(config('translation.ui_url') . '/{language}', 'LanguageTranslationController@update')
+            ->name('languages.translations.update');
 
-    $router->post(config('translation.ui_url').'/{language}/translations', 'LanguageTranslationController@store')
-        ->name('languages.translations.store');
-});
+        $router->get(config('translation.ui_url') . '/{language}/translations/create', 'LanguageTranslationController@create')
+            ->name('languages.translations.create')->middleware(SetLocale::class, 'can:translation create');
+
+        $router->post(config('translation.ui_url') . '/{language}/translations', 'LanguageTranslationController@store')
+            ->name('languages.translations.store');
+    }
+);
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

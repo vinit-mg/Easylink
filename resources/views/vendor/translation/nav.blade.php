@@ -10,7 +10,8 @@
         </a>
     </li>
     <li>
-        <a href="{{ route('languages.translations.index', config('app.locale')) }}" class="{{ set_active('*/translations') }} btn btn-primary">
+        <a href="{{ route('languages.translations.index', config('app.locale')) }}"
+            class="{{ request()->is('languages/*/translations*') ? 'active' : '' }} btn btn-primary">
             @include('translation::icons.translate')
             {{ __('translation::translation.translations') }}
         </a>

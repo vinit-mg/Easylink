@@ -1,12 +1,13 @@
 <?php
 
+use App\Http\Middleware\SetLocale;
 use App\Http\Middleware\HasAccessAdmin;
 
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => config('admin.prefix'),
-    'middleware' => ['auth', 'verified', HasAccessAdmin::class],
+    'middleware' => ['auth', 'verified', HasAccessAdmin::class, SetLocale::class],
     'as' => 'admin.',
 ], function () {
 

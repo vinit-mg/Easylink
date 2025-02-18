@@ -2,7 +2,9 @@
 
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
-
+use Illuminate\Support\Facades\Schedule;
+use App\Models\Schedulers;
+use Illuminate\Support\Facades\Log;
 /*
 |--------------------------------------------------------------------------
 | Console Routes
@@ -17,3 +19,16 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Schedule::command('subscriptions:expire')->daily();
+
+$schedulers = Schedulers::all();
+
+foreach ($schedulers as $scheduler) {
+    if(!$scheduler->IsActive){
+        continue;
+    }
+    Log::info("Scheduling tasks for scheduler: {$scheduler->id}");
+    Schedule::command('store:schedule-tasks --scheduler='.$scheduler->id)
+        ->{$scheduler->frequency}()->withoutOverlapping(); // Prevent duplicate job execution;
+}

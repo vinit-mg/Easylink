@@ -11,7 +11,7 @@ class Schedulers extends Model
     use HasFactory;
 
     protected $table = "schedulers";
-    protected $fillable = ['store_id', 'package_feature_id', 'frequency', 'next_run', 'last_run', 'attemts', 'IsActive', 'creted_at', 'updated_at'];
+    protected $fillable = ['store_id', 'package_feature_id', 'frequency', 'next_run', 'last_run', 'attemts', 'execution_time', 'IsActive', 'creted_at', 'updated_at'];
     public $timestamps = true;
 
     public function store()
@@ -31,7 +31,9 @@ class Schedulers extends Model
         parent::boot();
 
         static::saving(function ($scheduler) {
+           
             if ($scheduler->isDirty('frequency') || $scheduler->isDirty('last_run')) {
+                // dd($scheduler);
                 $scheduler->setNextRun();
             }
         });
@@ -49,35 +51,23 @@ class Schedulers extends Model
         }
 
         switch ($this->frequency) {
-            case '* * * * *': // Every minute
+            case 'everyMinute': // Every minute
                 $this->next_run = $lastRunTime->addMinute();
                 break;
-            case '*/5 * * * *': // Every 5 minutes
+            case 'everyFiveMinutes': // Every 5 minutes
                 $this->next_run = $lastRunTime->addMinutes(5);
                 break;
-            case '*/10 * * * *': // Every 10 minutes
-                $this->next_run = $lastRunTime->addMinutes(10);
-                break;
-            case '*/15 * * * *': // Every 15 minutes
+            case 'everyFifteenMinutes': // Every 15 minutes
                 $this->next_run = $lastRunTime->addMinutes(15);
                 break;
-            case '*/30 * * * *': // Every 30 minutes
+            case 'everyThirtyMinutes': // Every 30 minutes
                 $this->next_run = $lastRunTime->addMinutes(30);
                 break;
-            case '0 * * * *': // Hourly
+            case 'hourly': // Hourly
                 $this->next_run = $lastRunTime->addHour();
                 break;
-            case '0 */6 * * *': // Every 6 hours
-                $this->next_run = $lastRunTime->addHours(6);
-                break;
-            case '0 0 * * *': // Daily
+            case 'daily': // Daily
                 $this->next_run = $lastRunTime->addDay();
-                break;
-            case '0 0 1 * *': // Monthly
-                $this->next_run = $lastRunTime->addMonth();
-                break;
-            case '0 0 1 1 *': // Yearly
-                $this->next_run = $lastRunTime->addYear();
                 break;
             default:
                 $this->next_run = null;

@@ -7,6 +7,7 @@ use App\Services\IntegrationServiceResolver;
 use App\Services\FeatureService;
 use App\Http\Classes\CustomerStore;
 use App\Jobs\OrderTransferJob;
+use App\Models\Schedulers;
 
 class OrdersController extends Controller
 {
@@ -52,7 +53,8 @@ class OrdersController extends Controller
            
             extract($data);
 
-            OrderTransferJob::dispatch($store);
+            $Scheduler = Schedulers::find(1);
+            OrderTransferJob::dispatch($store, $Scheduler);
 
             if (!$store->hasPermission('List Orders')) {
                 return response()->json(['error' => 'This store has no permissions to view orders'], 400);

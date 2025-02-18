@@ -13,19 +13,16 @@ use App\Jobs\ProductUpdateJob;
 
 class StoreFeatureScheduler extends Command
 {
-    protected $signature = 'store:schedule-tasks';
+    protected $signature = 'store:schedule-tasks {--scheduler=}';
     protected $description = 'Run scheduled tasks for stores';
 
     public function handle()
     {
-        $schedulers = Schedulers::with('store.customer')->get();
 
-        foreach ($schedulers as $scheduler) {
-            if(!$scheduler->IsActive){
-                continue;
-            }
-            $this->executeFeatureTask($scheduler);
-        }
+        $schedule_id = $this->option('scheduler');
+        $scheduler = Schedulers::find($schedule_id);
+
+        $this->executeFeatureTask($scheduler);
 
         $this->info('Scheduled tasks executed successfully.');
     }
@@ -36,23 +33,24 @@ class StoreFeatureScheduler extends Command
         $customer = $store->customer;
         $queue = "store_{$store->id}"; // Store-specific queue
 
-        Log::info("Executing {$scheduler->feature} for Store: {$store->name} (Customer: {$customer->name})");
-
-        switch ($scheduler->feature) {
-            case 'order_transfer':
-                OrderTransferJob::dispatch($store)->onQueue($queue.'_order_transfer');
+        Log::info("Executing {$scheduler->PackageFeature->feature_name} for Store: {$store->name} (Customer: {$customer->CompanyName})");
+        
+        switch ($scheduler->PackageFeature->feature_name) {
+            case 'Order Transfer':
+                OrderTransferJob::dispatch($store, $scheduler)->onQueue($queue.'_order_transfer');
+                $this->info('order_transfer');
                 break;
             case 'order_update':
-                OrderUpdateJob::dispatch($store)->onQueue($queue.'_order_update');
+                OrderUpdateJob::dispatch($store, $scheduler)->onQueue($queue.'_order_update');
                 break;
-            case 'inventory_update':
-                InventoryUpdateJob::dispatch($store)->onQueue($queue.'_inventory_update');
+            case 'Inventory Update':
+                InventoryUpdateJob::dispatch($store, $scheduler)->onQueue($queue.'_inventory_update');
                 break;
-            case 'customer_transfer':
-                CustomerTransferJob::dispatch($store)->onQueue($queue.'_customer_transfer');
+            case 'Customer transfer':
+                CustomerTransferJob::dispatch($store, $scheduler)->onQueue($queue.'_customer_transfer');
                 break;
             case 'product_update':
-                ProductUpdateJob::dispatch($store)->onQueue($queue.'_product_update');
+                ProductUpdateJob::dispatch($store, $scheduler)->onQueue($queue.'_product_update');
                 break;
         }
     }

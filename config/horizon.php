@@ -1,7 +1,10 @@
 <?php
 
+use App\Models\Stores;
 use Illuminate\Support\Str;
 
+$queue = array('default');
+$queue = explode(',', env('STORES_IDS', ''));
 return [
 
     /*
@@ -182,7 +185,7 @@ return [
     'defaults' => [
         'supervisor-1' => [
             'connection' => 'redis',
-            'queue' => ['default'],
+            'queue' => $queue,
             'balance' => 'auto',
             'autoScalingStrategy' => 'time',
             'maxProcesses' => 1,

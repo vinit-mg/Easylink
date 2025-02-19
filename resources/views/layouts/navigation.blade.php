@@ -59,7 +59,7 @@
                 @if($menu['icon'])
                     <x-admin.base-icon path="{{$menu['icon']}}" />
                 @endif
-                <span>{{ $menu['name'] }}</span>
+                <span>{{ __($menu['name']) }}</span>
                 @if(!$menu['children']->isEmpty())
                     <i class="bi bi-chevron-down ms-auto"></i>
                 @endif

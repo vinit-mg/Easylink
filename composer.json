@@ -8,6 +8,7 @@
         "php": "^8.2",
         "balajidharma/laravel-admin-core": "^3.0",
         "balajidharma/laravel-crud": "^1.0",
+        "joedixon/laravel-translation": "^1.1",
         "laravel/framework": "^11.0",
         "laravel/horizon": "^5.30",
         "laravel/tinker": "^2.9",

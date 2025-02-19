@@ -1,0 +1,366 @@
+/* Container for the panel */
+.panel {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px;
+    width: 100%;
+}
+
+/* Panel header styles */
+.panel-header {
+    padding: 16px;
+    background-color: #f7f7f7;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Button style in the header */
+.panel-header .button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.panel-header .button:hover {
+    background-color: #0056b3;
+}
+
+/* Panel body styles */
+.panel-body {
+    padding: 16px;
+}
+
+.panel-body table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.panel-body table th, .panel-body table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.panel-body table th {
+    background-color: #f7f7f7;
+    font-weight: 600;
+    color: #333;
+}
+
+.panel-body table td a {
+    color: #007bff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.panel-body table td a:hover {
+    color: #0056b3;
+}
+
+.panel-body table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Responsiveness */
+@media (max-width: 768px) {
+    .panel {
+        width: 100%;
+    }
+}
+
+/* Styles for the specific navigation (inside the <ul> with .custom-nav) */
+.custom-nav {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+    list-style-type: none; /* Remove bullet points */
+    margin: 0; /* Remove default margin from <ul> */
+    padding: 0; /* Remove default padding from <ul> */
+}
+
+/* List item styling inside .custom-nav */
+.custom-nav li {
+    margin-left: 20px;
+}
+
+/* Link styling for buttons with .btn */
+.custom-nav li a.btn {
+    display: flex;
+    align-items: center;
+    color: #fff; /* Button text color */
+    text-decoration: none;
+    background-color: #007bff; /* Primary button color */
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Hover and active states for the buttons */
+.custom-nav li a.btn:hover,
+.custom-nav li a.btn.active {
+    background-color: #0056b3; /* Darker blue on hover/active */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+/* Optional: Styling for icons inside the buttons */
+.custom-nav li a.btn svg {
+    margin-right: 8px; /* Space between the icon and text */
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .custom-nav {
+        justify-content: flex-start; /* Stack items on smaller screens */
+    }
+
+    .custom-nav li {
+        margin-left: 0;
+        margin-top: 8px;
+    }
+
+    .custom-nav li a.btn {
+        font-size: 0.9rem;
+    }
+}
+
+/* Panel container styling */
+.panel {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    margin: 20px auto;
+}
+
+/* Panel header styling */
+.panel-header {
+    background-color: #f7f7f7;
+    padding: 16px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+/* Panel body styling */
+.panel-body {
+    padding: 16px;
+}
+
+/* Form fieldset reset */
+.panel-body fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Styling for each input field container */
+.panel-body .form-group {
+    margin-bottom: 20px;
+}
+
+/* Label styling */
+.panel-body label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    display: block;
+    margin-bottom: 8px;
+}
+
+/* Input styling */
+.panel-body input[type="text"],
+.panel-body input[type="text"]:focus {
+    width: 100%;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: border-color 0.3s ease;
+}
+
+/* Focused input field styling */
+.panel-body input[type="text"]:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Panel footer styling */
+.panel-footer {
+    padding: 16px;
+    background-color: #f7f7f7;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Button styling */
+.panel-footer .button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the button */
+.panel-footer .button:hover {
+    background-color: #0056b3;
+}
+
+/* Flexbox for button alignment */
+.panel-footer.flex {
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .panel {
+        width: 100%;
+    }
+}
+
+/* Unique container class for translations form */
+.translations-form-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Panel header specific to translations form */
+.translations-form-container .panel-header {
+    padding: 16px;
+    background-color: #f7f7f7;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Flex container inside panel header */
+.translations-form-container .panel-header .flex {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+/* Input and select components inside header */
+.translations-form-container .panel-header .form-group {
+    margin-right: 12px;
+}
+
+.translations-form-container .panel-header .form-group select,
+.translations-form-container .panel-header .form-group input {
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    transition: border-color 0.3s ease;
+}
+
+.translations-form-container .panel-header .form-group select:focus,
+.translations-form-container .panel-header .form-group input:focus {
+    border-color: #007bff;
+}
+
+/* Button styling inside panel header */
+.translations-form-container .panel-header .button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.translations-form-container .panel-header .button:hover {
+    background-color: #0056b3;
+}
+
+/* Panel body styles */
+.translations-form-container .panel-body {
+    padding: 16px;
+}
+
+/* Table styling inside the panel */
+.translations-form-container .panel-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.translations-form-container .panel-body table th,
+.translations-form-container .panel-body table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.translations-form-container .panel-body table th {
+    background-color: #f7f7f7;
+    font-weight: 600;
+    color: #333;
+}
+
+.translations-form-container .panel-body table td {
+    color: #555;
+}
+
+.translations-form-container .panel-body table td a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.translations-form-container .panel-body table td a:hover {
+    color: #0056b3;
+}
+
+.translations-form-container .panel-body table tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Styling for translation input component */
+.translations-form-container translation-input {
+    display: inline-block;
+    width: 100%;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .translations-form-container {
+        width: 100%;
+        padding: 16px;
+    }
+
+    /* Adjust table styling on smaller screens */
+    .translations-form-container .panel-body table th,
+    .translations-form-container .panel-body table td {
+        padding: 8px;
+    }
+}
+
+/* Hide the pencil icon (4th SVG) */
+td .flex svg:nth-child(4) {
+    display: none;
+  }
+  

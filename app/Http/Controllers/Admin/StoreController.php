@@ -10,6 +10,8 @@ use App\Models\Customers;
 use App\Models\Auth;
 use App\Models\DynamicFields;
 use App\Models\StoreSettings;
+use App\Models\DestinationSettings;
+use App\Models\SourceSettings;
 use App\Http\Requests\StoreStoreRequest;
 use App\Http\Requests\UpdateStoreRequest;
 use Illuminate\Http\Request;
@@ -245,11 +247,16 @@ class StoreController extends Controller{
         return view('admin.Store.managesettings', compact('store', 'features', 'customer', 'storeProcesses'));
     }
 
-    public function saveSettings(Request $request, Customers $customer, Stores $store){
-        
+    public function saveSettings(Request $request, Customers $customer, Stores $store)
+    {
         $formFields = $request->except(['_token']); // Exclude the CSRF token if present
-        
+
+        $sourceSettingKeys = SourceSettings::whereSourceId($store->source_id)->pluck('setting_key')->toArray();
+
+        $existKeys = [];
+
         foreach ($formFields as $key => $value) {
+
             // Check if the value is an array; if so, convert it to JSON
             $metaValue = is_array($value) ? json_encode($value) : $value;
 
@@ -262,11 +269,62 @@ class StoreController extends Controller{
                     'meta_value' => $metaValue,
                 ]
             );
+
+            $existKeys[] = $key;
         }
 
-        return redirect()->route('admin.customer.stores.manage', $customer->uuid)
-         ->with('message', __('Settings saved successfully!'));
+        $removed = array_diff($sourceSettingKeys, $existKeys);
+
+        // Remove the settings for the keys that were removed from the form
+        if ($removed) {
+            StoreSettings::where('store_id', $store->id)
+                ->whereIn('meta_key', $removed)
+                ->delete();
+        }
+
+        return redirect()->route('admin.customer.stores.manage', [$customer->uuid, $store->uuid])
+            ->with('message', __('Settings saved successfully!'));
     }
+
+    public function saveAckro(Request $request, Customers $customer, Stores $store)
+    {
+        $formFields = $request->except(['_token']); // Exclude the CSRF token if present
+
+        $destinationSettingKeys = DestinationSettings::whereDestinationId($store->destination_id)->pluck('setting_key')->toArray();
+
+        $existKeys = [];
+
+        foreach ($formFields as $key => $value) {
+
+            // Check if the value is an array; if so, convert it to JSON
+            $metaValue = is_array($value) ? json_encode($value) : $value;
+
+            StoreSettings::updateOrCreate(
+                [
+                    'store_id' => $store->id,
+                    'meta_key' => $key,
+                ],
+                [
+                    'meta_value' => $metaValue,
+                ]
+            );
+
+            $existKeys[] = $key;
+        }
+
+        $removed = array_diff($destinationSettingKeys, $existKeys);
+
+        // Remove the settings for the keys that were removed from the form
+        if ($removed) {
+            StoreSettings::where('store_id', $store->id)
+                ->whereIn('meta_key', $removed)
+                ->delete();
+        }
+
+        return redirect()->route('admin.customer.stores.manage', [$customer->uuid, $store->uuid, 'tab' => 'ackro'])
+            ->with('message', __('Settings saved successfully!'));
+    }
+    
     public function loadAddOns(Customers $customer, Stores $store, AddOnFeatures $feature){
 
         $store = Stores::findOrFail($store->id);
@@ -341,7 +399,7 @@ class StoreController extends Controller{
         }
 
         return redirect()
-            ->route('admin.customer.stores.manage', [$customer->uuid, $store->uuid])
+            ->route('admin.customer.stores.manage', [$customer->uuid, $store->uuid, 'tab' => 'permission'])
             ->with('message', __('Permissions saved successfully!'));
     }
 

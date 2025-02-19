@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Middleware\HasAccessAdmin;
+use App\Http\Middleware\SetLocale;
 
 
 Route::group([
     'namespace' => 'App\Http\Controllers\Admin',
     'prefix' => config('admin.prefix'),
-    'middleware' => ['auth', 'verified', HasAccessAdmin::class],
+    'middleware' => ['auth', 'verified', HasAccessAdmin::class, SetLocale::class],
     'as' => 'admin.',
 ], function () {
 
@@ -103,6 +104,7 @@ Route::group([
     Route::post('customer/{customer}/stores/{store}/activate', 'StoreController@activateStore')->name('customer.stores.activate');
     Route::post('customer/{customer}/stores/{store}/deactivate', 'StoreController@deactivateStore')->name('customer.stores.deactivate');
     Route::post('customer/{customer}/stores/{store}/settings', 'StoreController@saveSettings')->name('customer.stores.settings.save');
+    Route::post('customer/{customer}/stores/{store}/ackro', 'StoreController@saveAckro')->name('customer.stores.ackro.save');
     Route::post('customer/{customer}/stores/{store}/permissions', 'StoreController@savePermissions')->name('customer.stores.permissions.save');
     Route::get('customer/{customer}/stores/{store}/addons/{feature}', 'StoreController@loadAddOns')->name('customer.stores.load.addons');
 

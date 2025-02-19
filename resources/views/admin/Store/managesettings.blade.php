@@ -12,10 +12,10 @@
 							<a class="btn btn-primary" href="{{route('admin.customers.show', $customer->uuid)}}"><i class="bi bi-arrow-left me-1"></i>{{__('Back to customer')}}</a>
 						</div>
 						@php
-							$originalString_source = $store->source->name;
-							$convertedString_source = strtolower(str_replace(' ', '_', $originalString_source));
-							$originalString_destination = $store->destination->name;
-							$convertedString_destination = strtolower(str_replace(' ', '_', $originalString_destination));
+						$originalString_source = $store->source->name;
+						$convertedString_source = strtolower(str_replace(' ', '_', $originalString_source));
+						$originalString_destination = $store->destination->name;
+						$convertedString_destination = strtolower(str_replace(' ', '_', $originalString_destination));
 						@endphp
 						<nav>
 							<div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -32,95 +32,96 @@
 								<form class="row g-3" method="POST" action="{{ route('admin.customer.stores.settings.save',  [$customer->uuid,  $store->uuid]) }}">
 									@csrf
 									@foreach ($store->source->source_settings as $source_setting)
-										@if ($source_setting->setting_key =='shopify_order_transfer_payment_status')
-											<div class="col-sm-6">
-												<h4 class="card-title">{{__($source_setting->setting_name)}}</h4>
-												<div class="card-subtitle mb-3"> {{$source_setting->setting_description}} </div>
-											</div>
-											<div class="col-sm-6">
-												<label for="{{$source_setting->setting_key}}" class="form-label" >{{__('Add payment state')}}</label>
-												<select id="{{$source_setting->setting_key}}" class="form-control" name="{{$source_setting->setting_key}}[]" multiple="multiple">
-												<option value="paid" {{in_array('paid',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Paid')}}</option>
-												<option value="pending" {{in_array('pending',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Pending')}}</option>
-												<option value="authorized" {{in_array('authorized',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Authorized')}}</option>
-												<option value="partially_paid" {{in_array('partially_paid',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Partially paid')}}</option>
-												<option value="partially_refunded" {{in_array('partially_refunded',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Partially refunded')}}</option>
-												<option value="refunded" {{in_array('refunded',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Refunded')}}</option>
-												<option value="voided" {{in_array('voided',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Voided')}}</option>
-												<option value="expired" {{in_array('expired',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Expired')}}</option>
-												</select>
-											</div>
-										@endif
-										@if ($source_setting->setting_key =='shopify_order_transfer_fulfillment_status')
-											<div class="col-sm-6">
-												<h4 class="card-title">{{__($source_setting->setting_name)}}</h4>
-												<div class="card-subtitle mb-3"> {{$source_setting->setting_description}} </div>
-											</div>
-											<div class="col-sm-6">
-												<label for="{{$source_setting->setting_key}}" class="form-label" >{{__('Add fulfillment state')}}</label>
-												<select id="{{$source_setting->setting_key}}" class="form-control" name="{{$source_setting->setting_key}}[]" multiple="multiple">
-												<option value="unfulfilled" {{in_array('unfulfilled',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Unfulfilled')}}</option>
-												<option value="fulfilled" {{in_array('fulfilled',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Fulfilled')}}</option>
-												<option value="partial" {{in_array('partial',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Partial')}}</option>
-												<option value="scheduled" {{in_array('scheduled',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Scheduled')}}</option>
-												<option value="on_hold" {{in_array('on_hold',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('On hold')}}</option>
-												</select>
-											</div>
-										@endif
-										@if ($source_setting->setting_key =='shopify_payment_capture_on_order_update')
-										<div class="col-sm-6">
-											<h4 class="card-title">{{__($source_setting->setting_name)}}</h4>
-											<div class="card-subtitle mb-3"> {{$source_setting->setting_description}} </div>
+									@if ($source_setting->setting_key =='shopify_order_transfer_payment_status')
+									<div class="col-sm-6">
+										<h4 class="card-title">{{__($source_setting->setting_name)}}</h4>
+										<div class="card-subtitle mb-3"> {{$source_setting->setting_description}} </div>
+									</div>
+									<div class="col-sm-6">
+										<label for="{{$source_setting->setting_key}}" class="form-label">{{__('Add payment state')}}</label>
+										<select id="{{$source_setting->setting_key}}" class="form-control" name="{{$source_setting->setting_key}}[]" multiple="multiple">
+											<option value="paid" {{in_array('paid',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Paid')}}</option>
+											<option value="pending" {{in_array('pending',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Pending')}}</option>
+											<option value="authorized" {{in_array('authorized',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Authorized')}}</option>
+											<option value="partially_paid" {{in_array('partially_paid',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Partially paid')}}</option>
+											<option value="partially_refunded" {{in_array('partially_refunded',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Partially refunded')}}</option>
+											<option value="refunded" {{in_array('refunded',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Refunded')}}</option>
+											<option value="voided" {{in_array('voided',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Voided')}}</option>
+											<option value="expired" {{in_array('expired',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Expired')}}</option>
+										</select>
+									</div>
+									@endif
+									@if ($source_setting->setting_key =='shopify_order_transfer_fulfillment_status')
+									<div class="col-sm-6">
+										<h4 class="card-title">{{__($source_setting->setting_name)}}</h4>
+										<div class="card-subtitle mb-3"> {{$source_setting->setting_description}} </div>
+									</div>
+									<div class="col-sm-6">
+										<label for="{{$source_setting->setting_key}}" class="form-label">{{__('Add fulfillment state')}}</label>
+										<select id="{{$source_setting->setting_key}}" class="form-control" name="{{$source_setting->setting_key}}[]" multiple="multiple">
+											<option value="unfulfilled" {{in_array('unfulfilled',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Unfulfilled')}}</option>
+											<option value="fulfilled" {{in_array('fulfilled',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Fulfilled')}}</option>
+											<option value="partial" {{in_array('partial',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Partial')}}</option>
+											<option value="scheduled" {{in_array('scheduled',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('Scheduled')}}</option>
+											<option value="on_hold" {{in_array('on_hold',getStoreSetting($store->id, $source_setting->setting_key)) ? 'selected' : ''}}>{{__('On hold')}}</option>
+										</select>
+									</div>
+									@endif
+									@if ($source_setting->setting_key =='shopify_payment_capture_on_order_update')
+									<div class="col-sm-6">
+										<h4 class="card-title">{{__($source_setting->setting_name)}}</h4>
+										<div class="card-subtitle mb-3"> {{$source_setting->setting_description}} </div>
+									</div>
+									<div class="col-sm-6">
+										<div class="form-check form-switch">
+											<input class="form-check-input" type="checkbox" id="{{$source_setting->setting_key}}" name="{{$source_setting->setting_key}}" {{getStoreSetting($store->id, $source_setting->setting_key) ? 'checked' : ''}}>
+											<label for="{{$source_setting->setting_key}}" class="form-label">{{__('Enable payment capture')}}</label>
 										</div>
-										<div class="col-sm-6">
-											<div class="form-check form-switch">
-												<input class="form-check-input" type="checkbox" id="{{$source_setting->setting_key}}" name="{{$source_setting->setting_key}}" {{getStoreSetting($store->id, $source_setting->setting_key) ? 'checked' : ''}}>
-												<label for="{{$source_setting->setting_key}}" class="form-label" >{{__('Enable payment capture')}}</label>
-											</div>
-										</div>
-										@endif
-									@endforeach 
+									</div>
+									@endif
+									@endforeach
 									<div class="col-sm-12 text-center">
 										<button type="submit" class="btn btn-primary" fdprocessedid="ufar4">{{__('Save')}}</button>
 									</div>
 								</form>
 							</div>
 							<div class="tab-pane mt-5 fade" id="{{$convertedString_destination}}" role="tabpanel" aria-labelledby="{{$convertedString_destination}}_tab">
-								<form class="row g-3" method="POST" action="">
+							<form class="row g-3" method="POST" action="{{ route('admin.customer.stores.ackro.save',  [$customer->uuid,  $store->uuid]) }}">
+							@csrf
 									@foreach ($store->destination->destination_settings as $destination_setting)
-										@if ($destination_setting->setting_key =='ackro_order_update_status')
-											<div class="col-sm-6">
-												<h4 class="card-title">{{__($destination_setting->setting_name)}}</h4>
-												<div class="card-subtitle mb-3"> {{$destination_setting->setting_description}} </div>
-											</div>
-											<div class="col-sm-6">
-												<label for="{{$destination_setting->setting_key}}" class="form-label" >{{__('Add order update state')}}</label>
-												<select id="{{$destination_setting->setting_key}}" class="form-control" name="{{$destination_setting->setting_key}}[]" multiple="multiple">
-												<option value="shipped">{{__('Shipped')}}</option>
-												<option value="completed">{{__('Completed')}}</option>
-												</select>
-											</div>
-											<div class="col-sm-12 text-center">
-												<button type="submit" class="btn btn-primary" fdprocessedid="ufar4">{{__('Save')}}</button>
-											</div>
-										@endif
-									@endforeach 
+									@if ($destination_setting->setting_key =='ackro_order_update_status')
+									<div class="col-sm-6">
+										<h4 class="card-title">{{__($destination_setting->setting_name)}}</h4>
+										<div class="card-subtitle mb-3"> {{$destination_setting->setting_description}} </div>
+									</div>
+									<div class="col-sm-6">
+										<label for="{{$destination_setting->setting_key}}" class="form-label">{{__('Add order update state')}}</label>
+										<select id="{{$destination_setting->setting_key}}" class="form-control" name="{{$destination_setting->setting_key}}[]" multiple="multiple">
+										<option value="shipped" {{in_array('shipped',getStoreSetting($store->id, $destination_setting->setting_key)) ? 'selected' : ''}}>{{__('Shipped')}}</option>
+										<option value="completed" {{in_array('completed',getStoreSetting($store->id, $destination_setting->setting_key)) ? 'selected' : ''}}>{{__('Completed')}}</option>
+										</select>
+									</div>
+									<div class="col-sm-12 text-center">
+										<button type="submit" class="btn btn-primary" fdprocessedid="ufar4">{{__('Save')}}</button>
+									</div>
+									@endif
+									@endforeach
 								</form>
 							</div>
 							<div class="tab-pane mt-5 fade" id="addon" role="tabpanel" aria-labelledby="addon_tab">
 								@foreach ($store->enabledFeatures as $feature)
-									<div class="col-sm-12 addon-module">
-										<div class="d-flex justify-content-between align-items-center">
-											<div>
-												<h3>{{ $feature->name }}</h3>
-												<div>{{$feature->addOn->description}}</div>
-											</div>
-											<div>
-												<a href="{{ route('admin.customer.stores.load.addons', [$customer->uuid, $store->uuid, $feature->id]) }}" class="btn btn-primary"><i class="bi bi-gear"></i></a>
-											</div>
+								<div class="col-sm-12 addon-module">
+									<div class="d-flex justify-content-between align-items-center">
+										<div>
+											<h3>{{ $feature->name }}</h3>
+											<div>{{$feature->addOn->description}}</div>
+										</div>
+										<div>
+											<a href="{{ route('admin.customer.stores.load.addons', [$customer->uuid, $store->uuid, $feature->id]) }}" class="btn btn-primary"><i class="bi bi-gear"></i></a>
 										</div>
 									</div>
-								@endforeach 
+								</div>
+								@endforeach
 							</div>
 							<div class="tab-pane mt-5 fade" id="permissions" role="tabpanel" aria-labelledby="permissions_tab">
 								<form class="row g-3" method="POST" action="{{ route('admin.customer.stores.permissions.save',[$customer->uuid, $store->uuid] ) }}" name="storepermissions">
@@ -131,74 +132,74 @@
 
 										@foreach ($features as $feature)
 
-											@if($feature->type != 'order') @continue; @endif
+										@if($feature->type != 'order') @continue; @endif
 
-											@php $selected = ''; @endphp
+										@php $selected = ''; @endphp
 
-											@if($store->hasPermission($feature->feature_name))
-												@php $selected = 'checked'; @endphp
-											@endif
-											
-											<li class="list-group-item">
-												<div class="form-check form-switch">
-													<input class="form-check-input me-1" type="checkbox" name="store_order_permissions[]" {{$selected}} value="{{$feature->id}}">
-													<label class="form-check-label" for="store_permission">{{ $feature->feature_name }}</label>
-												</div>
-											</li>
+										@if($store->hasPermission($feature->feature_name))
+										@php $selected = 'checked'; @endphp
+										@endif
+
+										<li class="list-group-item">
+											<div class="form-check form-switch">
+												<input class="form-check-input me-1" type="checkbox" name="store_order_permissions[]" {{$selected}} value="{{$feature->id}}">
+												<label class="form-check-label" for="store_permission">{{ $feature->feature_name }}</label>
+											</div>
+										</li>
 										@endforeach
-										
+
 										<li class="list-group-item active">{{__('Inventory')}}</li>
 
-											@foreach ($features as $feature)
+										@foreach ($features as $feature)
 
-												@if($feature->type != 'inventory') @continue; @endif
+										@if($feature->type != 'inventory') @continue; @endif
 
-												@php $selected = ''; @endphp
+										@php $selected = ''; @endphp
 
-												@if($store->hasPermission($feature->feature_name))
-												
-													@php $selected = 'checked'; @endphp
+										@if($store->hasPermission($feature->feature_name))
 
-												@endif
+										@php $selected = 'checked'; @endphp
 
-												<li class="list-group-item">
-													<div class="form-check form-switch">
-														<input class="form-check-input me-1" type="checkbox" name="store_inventory_permissions[]" {{$selected}} value="{{$feature->id}}">
-														<label class="form-check-label" for="store_permission">{{ $feature->feature_name }}</label>
-													</div>
-												</li>
-											@endforeach
+										@endif
+
+										<li class="list-group-item">
+											<div class="form-check form-switch">
+												<input class="form-check-input me-1" type="checkbox" name="store_inventory_permissions[]" {{$selected}} value="{{$feature->id}}">
+												<label class="form-check-label" for="store_permission">{{ $feature->feature_name }}</label>
+											</div>
+										</li>
+										@endforeach
 
 										<li class="list-group-item active">{{__('Customer')}}</li>
 
-											@foreach ($features as $feature)
+										@foreach ($features as $feature)
 
-												@if($feature->type != 'customer') @continue; @endif
+										@if($feature->type != 'customer') @continue; @endif
 
-												@php $selected = ''; @endphp
+										@php $selected = ''; @endphp
 
-												@if($store->hasPermission($feature->feature_name))
-													@php $selected = 'checked'; @endphp
-												@endif
-												
-												<li class="list-group-item">
-													<div class="form-check form-switch">
-														<input class="form-check-input me-1" type="checkbox" name="store_customer_permissions[]" {{$selected}} value="{{$feature->id}}">
-														<label class="form-check-label" for="store_permission">{{ $feature->feature_name }}</label>
-													</div>
-												</li>
-											@endforeach
+										@if($store->hasPermission($feature->feature_name))
+										@php $selected = 'checked'; @endphp
+										@endif
+
+										<li class="list-group-item">
+											<div class="form-check form-switch">
+												<input class="form-check-input me-1" type="checkbox" name="store_customer_permissions[]" {{$selected}} value="{{$feature->id}}">
+												<label class="form-check-label" for="store_permission">{{ $feature->feature_name }}</label>
+											</div>
+										</li>
+										@endforeach
 
 										@if($features->isEmpty())
-											<p>{{__('Permissions not assign to user');}}</p>
+										<p>{{__('Permissions not assign to user');}}</p>
 										@else
-											<div>
-												<button type="submit" class="btn btn-primary">{{__('Save')}}</button>
-											</div>
+										<div>
+											<button type="submit" class="btn btn-primary">{{__('Save')}}</button>
+										</div>
 										@endif
 									</ul>
 								</form>
-							
+
 							</div>
 							<div class="tab-pane mt-5 fade" id="supervisor" role="tabpanel" aria-labelledby="supervisor_tab">
 								<table class="table">
@@ -208,16 +209,18 @@
 										<th>{{__('Details')}}</th>
 									</tr>
 									@foreach ($storeProcesses as $process)
-										<tr>
-											<td>{{ $process['name'] }}</td>
-											<td>{{ $process['status'] }}</td>
-											<td>{{ $process['details'] }}</td>
-										</tr>
+									<tr>
+										<td>{{ $process['name'] }}</td>
+										<td>{{ $process['status'] }}</td>
+										<td>{{ $process['details'] }}</td>
+									</tr>
 									@endforeach
 
 									@empty($storeProcesses)
-										<tr><td colspan="3">{{__('Might be store is not activated yet')}}</td></tr>
-									@endempty 
+									<tr>
+										<td colspan="3">{{__('Might be store is not activated yet')}}</td>
+									</tr>
+									@endempty
 								</table>
 							</div>
 							<div class="tab-pane mt-5 fade" id="schedulers" role="tabpanel" aria-labelledby="schedulers_tab">
@@ -233,32 +236,34 @@
 										<th>{{__('Actions')}}</th>
 									</tr>
 									@foreach ($store->schedulers as $scheduler)
-										<tr>
-											<td>{{ $scheduler->PackageFeature->feature_name }}</td>
-											<td>{{ $scheduler->frequency }}</td>
-											<td>{{ $scheduler->next_run }}</td>
-											<td>{{ $scheduler->last_run }}</td>
-											<td>{{ $scheduler->attemts }}</td>
-											<td>{{ $scheduler->execution_time }}</td>
-											<td>{{ $scheduler->IsActive ? __('Active') : __('Inactive') }}</td>
-											<td>
-												@canany(['adminUpdate', 'adminView'], $scheduler)
-													<div class="flex">
-													@can('adminView', $scheduler)
-														<a href="{{route('admin.customer.stores.scheduler.show', [$customer->uuid, $store->uuid, $scheduler->id])}}" class="btn btn-primary"><i class="bi bi-display"></i></a>
-													@endcan
-													@can('adminUpdate', $scheduler)
-														<a href="{{route('admin.customer.stores.scheduler.edit', [$customer->uuid, $store->uuid, $scheduler->id])}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
-													@endcan
-												</div>
-												@endcanany
-											</td>
-										</tr>
+									<tr>
+										<td>{{ $scheduler->PackageFeature->feature_name }}</td>
+										<td>{{ $scheduler->frequency }}</td>
+										<td>{{ $scheduler->next_run }}</td>
+										<td>{{ $scheduler->last_run }}</td>
+										<td>{{ $scheduler->attemts }}</td>
+										<td>{{ $scheduler->execution_time }}</td>
+										<td>{{ $scheduler->IsActive ? __('Active') : __('Inactive') }}</td>
+										<td>
+											@canany(['adminUpdate', 'adminView'], $scheduler)
+											<div class="flex">
+												@can('adminView', $scheduler)
+												<a href="{{route('admin.customer.stores.scheduler.show', [$customer->uuid, $store->uuid, $scheduler->id])}}" class="btn btn-primary"><i class="bi bi-display"></i></a>
+												@endcan
+												@can('adminUpdate', $scheduler)
+												<a href="{{route('admin.customer.stores.scheduler.edit', [$customer->uuid, $store->uuid, $scheduler->id])}}" class="btn btn-primary"><i class="bi bi-pencil-square"></i></a>
+												@endcan
+											</div>
+											@endcanany
+										</td>
+									</tr>
 									@endforeach
 
 									@empty($storeProcesses)
-										<tr><td colspan="3">{{__('No schedulers found')}}</td></tr>
-									@endempty 
+									<tr>
+										<td colspan="3">{{__('No schedulers found')}}</td>
+									</tr>
+									@endempty
 								</table>
 							</div>
 						</div>
@@ -268,3 +273,20 @@
 		</div>
 	</section>
 </x-admin.wrapper>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const tab = urlParams.get('tab');
+
+    if (tab === 'ackro') {
+      document.getElementById('ackro_tab').click();
+    }
+
+    if (tab === 'permission') {
+      document.getElementById('permissions_tab').click();
+    }
+
+  });
+</script>

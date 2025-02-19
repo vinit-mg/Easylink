@@ -57,4 +57,17 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function switchLanguage(Request $request)
+    {
+        $language = $request->input('language');
+
+        app()->setLocale($language);
+
+        if (Auth::check()) {
+            Auth::user()->update(['language' => $language]);
+        }
+
+        return redirect()->back();
+    }
 }

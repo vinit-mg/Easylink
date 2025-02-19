@@ -35,7 +35,7 @@ function saveStoreSettings(int $storeId, array $settings)
  * @param mixed $default
  * @return mixed
  */
-function getStoreSetting(int $storeId, string $key, $default = null)
+function getStoreSetting(int $storeId, string $key, $default = [])
 {
     $setting = StoreSettings::where('store_id', $storeId)
         ->where('meta_key', $key)
